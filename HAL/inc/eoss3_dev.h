@@ -1001,30 +1001,6 @@ typedef struct
 	__IO uint32_t CID3;
 }TIMER_TypeDef;
 
-/*
- * FPGA GPIO
- */
-typedef struct
-{
-  	__IO uint32_t ID_VALUE;
-	__IO uint32_t REV_LEVEL;
-	__IO uint32_t GPIO_INPUT;
-	__IO uint32_t GPIO_OUTPUT;
-	__IO uint32_t GPIO_DIR_CTRL;
-}FPGA_GPIO_TypeDef;
-
-typedef struct
-{
-	__IO uint32_t UART_DR_DLLSB;    /* Receive/Transmit/DL_LSB: 0x00 */
-	__IO uint32_t UART_IER_DLMSB;   /* Interrupt Enable Register/DL_MSB: 0x04 */
-	__IO uint32_t UART_IIR_FCR;     /* Interrupt Identification Register, FIFO Control Register 0x08 */
-	__IO uint32_t UART_LCR;         /* Line Control Register 0xC */
-	__IO uint32_t UART_MCR;         /* Modem Control Register 0x10 */
-	__IO uint32_t UART_LSR;         /* Line Status Register 0x14 */
-	__IO uint32_t UART_MSR;         /* Modem Status Register 0x18 */
-	__IO uint32_t UART_SR;          /* Scratch Register 0x1C */
-} FPGA_UART_TypeDef;
-
 /**
   * @brief Peripheral_memory_map
   */
@@ -1092,12 +1068,6 @@ typedef struct
 /* Debug MCU registers base address */
 #define DBGMCU_BASE           ((uint32_t )0xE0042000)
 
-#define FB_GPIO_BASE	       FPGA_PERIPH_BASE
-#define FB_UART_BASE          (FPGA_PERIPH_BASE+0x1000)
-
-/* IR register definitions */
-#define FB_IR_DEVID_REG					(FPGA_PERIPH_BASE+(0x800)+(0x50<<2))	//	(FPGA_PERIPH_BASE+(0x50<<2))
-
 /*
  * Peripheral_declaration
  */
@@ -1121,10 +1091,6 @@ typedef struct
 #define EXT_REGS_FFE	((EXT_REGS_FFE_TypeDef *)EXT_REGS_FFE_BASE)
 #define AIP				((AIP_Typedef*)AIP_BASE)
 #define SPT				((SPT_REGS_TypeDef *)SPT_BASE)
-#define FB_GPIO		((FPGA_GPIO_TypeDef *)FB_GPIO_BASE)
-#define FB_UART         ((FPGA_UART_TypeDef *)FB_UART_BASE)
-#define FB_I2C          ((FPGA_I2C_TypeDef *)FB_I2C_BASE)
-#define FB_HRM		((FPGA_HRM_TypeDef *)FB_HRM_BASE)
 #define TIMER		((TIMER_TypeDef *)TIMER1_BASE)
 #define SHM_QL_BASE                   (0x2007C000)
 
