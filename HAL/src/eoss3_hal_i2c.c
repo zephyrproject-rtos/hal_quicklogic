@@ -1,5 +1,8 @@
 /*==========================================================
  * Copyright 2020 QuickLogic Corporation
+ *    Copyright (C) 2023 Szymon Duchniewicz
+ *    Copyright (C) 2023 Jakub Duchniewicz
+ *    Copyright (C) 2023 Avanade Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +26,12 @@
 #include <stdint.h>
 #include <string.h>
 #include <stddef.h>
-#include <eoss3_dev.h>
-#include <eoss3_hal_def.h>
-#include <eoss3_hal_i2c.h>
-#include <eoss3_hal_pad_config.h>
+#include "eoss3_dev.h"
+#include "eoss3_hal_def.h"
+#include "eoss3_hal_i2c.h"
+#include "eoss3_hal_pad_config.h"
 #include "test_types.h"
-#include <eoss3_hal_wb.h>
+#include "eoss3_hal_wb.h"
 
 #ifdef __RTOS
 #include <FreeRTOS.h>
@@ -133,7 +136,6 @@ HAL_StatusTypeDef HAL_I2C_SetClockFreq(UINT32_t uiClkFreq)
     UINT32_t uiClock, uiPrescale;
     UINT8_t val;
     //Set the frequency
-    //uiClock = S3x_Clk_Get_Rate(S3X_FFE_X1_CLK); // TODO: FIX - add CLOCK rate getting function
     /* Get Source Clock (CL08_X4) Rate, which is equal to High Speed OSC (HSOSC) clock Rate 
      * and divide it accordingly. NOTE: This below assumes HSOSC rate is not modified (and by
      * default it is not) 

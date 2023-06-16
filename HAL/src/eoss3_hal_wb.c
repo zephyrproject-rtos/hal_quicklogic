@@ -1,5 +1,7 @@
 /*==========================================================
  * Copyright 2020 QuickLogic Corporation
+ *    Copyright (C) 2023 Szymon Duchniewicz
+ *    Copyright (C) 2023 Avanade Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +59,6 @@ HAL_StatusTypeDef HAL_WB_Transmit(UINT8_t ucOffset, UINT8_t ucVal, UINT8_t ucSla
                   else if(ucSlaveSel == WB_ADDR_I2C0_SLAVE_SEL)
                     EXT_REGS_FFE->CSR = (WB_CSR_I2C0MUX_SEL_WBMASTER | WB_CSR_MASTER_WR_EN | WB_CSR_MASTER_START);
 
-		  //QL_LOG_DBG_150K("addr = %x, csr = %x\r\n",EXT_REGS_FFE->ADDR,EXT_REGS_FFE->CSR);
         	return HAL_OK;
         }
 
