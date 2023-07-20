@@ -21,20 +21,15 @@
  *             FFE subsystem
  *                                                          
  *=========================================================*/
-#include "Fw_global_config.h"
 
 /* Standard includes. */
 #include <stdio.h>
 #include <string.h>
 
 #include "eoss3_dev.h"
-//#include "eoss3_hal_ffe.h"
-//#include "eoss3_hal_rcc.h"
 #include "eoss3_hal_pad_config.h"
 #include "eoss3_hal_wb.h"
 #include <test_types.h>
-#include "s3x_clock_hal.h"
-#include "dbg_uart.h"
 
 /*!
  * \fn		HAL_StatusTypeDef HAL_WB_Transmit(UINT8_t ucOffset, UINT8_t ucVal, UINT8_t ucSlaveSel)
@@ -114,25 +109,7 @@ HAL_StatusTypeDef HAL_WB_Receive(UINT8_t ucOffset, UINT8_t *buf, UINT8_t ucSlave
 HAL_StatusTypeDef HAL_WB_Init(UINT8_t ucSlaveSel)
 {
         PadConfig  padcfg;
-
-        //enable FFE power & clock domain
-        PMU->FFE_PWR_MODE_CFG = 0x0;
-        PMU->FFE_PD_SRC_MASK_N = 0x0;
-        PMU->FFE_WU_SRC_MASK_N = 0x0;
-
-        //wake up FFE
-        PMU->FFE_FB_PF_SW_WU = 0x1;
-        //check if FFE is in Active mode
-        while(!(PMU->FFE_STATUS & 0x1));
-
-	//HAL_SetClkGate(FFE_X1_CLK_TOP, C08X1_CLK_GATE_FFE_X1CLK,1);
-//	HAL_SetClkGate(EFUSE_SDMA_I2S_FFE_PF_CLK_TOP, C01_CLK_GATE_FFE,1);
-        S3x_Clk_Enable(S3X_FFE_X1_CLK);
-        S3x_Clk_Enable(S3X_FFE_CLK);
-/*
-        QL_LOG_DBG_150K("c8_x1 freq = %ld\r\n", S3x_Clk_Get_Rate(S3X_FFE_X1_CLK));
-      	QL_LOG_DBG_150K("C01_clk_gate = %x\r\n",CRU->C01_CLK_GATE);
-*/
+        /* Previously, FFE power and clock domain was enabled here, now done on SoC init */
         switch(ucSlaveSel)
         {
             case WB_ADDR_SPI0_SLAVE_SEL:
@@ -148,8 +125,6 @@ HAL_StatusTypeDef HAL_WB_Init(UINT8_t ucSlaveSel)
 
                 HAL_PAD_Config(&padcfg);
 
-        //dbg_str_hex32("MOSI - pad6 =", IO_MUX->PAD_6_CTRL);
-
                 //MISO
                 padcfg.ucPin = PAD_8;
                 padcfg.ucFunc = PAD8_FUNC_SEL_SPI_SENSOR_MISO;
@@ -161,7 +136,6 @@ HAL_StatusTypeDef HAL_WB_Init(UINT8_t ucSlaveSel)
                 padcfg.ucSmtTrg = PAD_SMT_TRIG_DIS;
 
                 HAL_PAD_Config(&padcfg);
-        //dbg_str_hex32("MISO - pad8", IO_MUX->PAD_8_CTRL);
 
                 //clk
                 padcfg.ucPin = PAD_10;
@@ -174,7 +148,6 @@ HAL_StatusTypeDef HAL_WB_Init(UINT8_t ucSlaveSel)
                 padcfg.ucSmtTrg = PAD_SMT_TRIG_DIS;
 
                 HAL_PAD_Config(&padcfg);
-        //dbg_str_hex32("CLK - pad10", IO_MUX->PAD_10_CTRL);
 
                 //Slave Select
                 padcfg.ucPin = PAD_9;
@@ -188,7 +161,6 @@ HAL_StatusTypeDef HAL_WB_Init(UINT8_t ucSlaveSel)
 
                 HAL_PAD_Config(&padcfg);
 
-        //dbg_str_hex32("CS - pad9", IO_MUX->PAD_9_CTRL);
             break;
 
             case WB_ADDR_I2C0_SLAVE_SEL:
