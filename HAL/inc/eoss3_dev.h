@@ -2463,5 +2463,9 @@ typedef struct
 #define REBOOT_CAUSE		(0xF)
 #define REBOOT_STATUS_REG	(PMU->MISC_POR_3)
 
+#ifdef __cplusplus
+}
+#endif /* __cplusplus */
+
 #endif /* __EOSS3_DEV_H */
 
